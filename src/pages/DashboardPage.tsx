@@ -28,6 +28,10 @@ export const DashboardPage: React.FC = () => {
   const [aiSummary, setAiSummary] = useState<AISummaryResponse | null>(null);
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  
+  // User's perspective state
+  const [userPerspective, setUserPerspective] = useState<PerspectiveResponse | null>(null);
+  const [userPerspectiveLoading, setUserPerspectiveLoading] = useState(false);
 
   // Check if current time is between 9PM and 9AM
   const isNightTime = () => {
@@ -51,6 +55,26 @@ useEffect(() => {
 
     fetchLatestTopic();
   }, []);
+
+  // Fetch user's perspective for current topic
+  useEffect(() => {
+    const fetchUserPerspective = async () => {
+      if (!user?.id || !topic?.id) return;
+      
+      try {
+        setUserPerspectiveLoading(true);
+        const userPerspectiveData = await perspectiveApi.getPerspectiveByUser(user.id, topic.id);
+        setUserPerspective(userPerspectiveData);
+      } catch (error) {
+        console.error('Failed to fetch user perspective:', error);
+        setUserPerspective(null);
+      } finally {
+        setUserPerspectiveLoading(false);
+      }
+    };
+
+    fetchUserPerspective();
+  }, [user?.id, topic?.id]);
 
   // Fetch AI summary if it's night time (9PM to 9AM)
   useEffect(() => {
@@ -144,6 +168,9 @@ const handleSubmitPerspective = async () => {
       // Clear input after successful submission
       setInputValue('');
       
+      // Set as user's perspective
+      setUserPerspective(newPerspective);
+      
       // Add new perspective to the top of the list optimistically
       setPerspectives(prev => [newPerspective, ...prev]);
       
@@ -184,6 +211,23 @@ const handleSubmitPerspective = async () => {
               )}
             </CardContent>
           </Card>
+          
+          {/* User's Perspective Card */}
+          {userPerspective && (
+            <Card className="border-2 border-r-4 border-b-4 border-black bg-gradient-to-br from-green-50 to-emerald-50">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-center text-gray-600">Your Perspective</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-xs text-gray-700 leading-relaxed">
+                  {userPerspective.content}
+                </p>
+                <p className="text-[10px] text-gray-400 mt-2">
+                  {new Date(userPerspective.createdAt).toLocaleString()}
+                </p>
+              </CardContent>
+            </Card>
+          )}
           
           {/* AI Summary Card - Only visible 9PM to 9AM */}
           {showSummary && (
@@ -243,6 +287,21 @@ const handleSubmitPerspective = async () => {
                 )}
               </CardContent>
             </Card>
+            
+            {/* User's Perspective Card */}
+            {userPerspective && (
+              <Card className="border-2 border-r-8 border-b-8 border-black bg-gradient-to-br from-green-50 to-emerald-50">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-md text-center text-gray-600">Your Perspective</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-xs text-gray-700 leading-relaxed">
+                    {userPerspective.content}
+                  </p>
+                  
+                </CardContent>
+              </Card>
+            )}
             
             {/* AI Summary Card - Only visible 9PM to 9AM */}
             {showSummary && (
@@ -349,11 +408,12 @@ const handleSubmitPerspective = async () => {
       </div>
     </div>
           
-          {/* Fixed Input Box at Bottom of right column */}
-          <div className="bg-white border-t border-gray-200">
-            <div className="w-full px-4 md:px-6 lg:px-8 md:max-w-5xl mx-auto py-4 md:py-5">
-              <div className="relative">
-                <Input 
+          {/* Fixed Input Box at Bottom of right column - Hidden if user already submitted */}
+          {!userPerspective && (
+            <div className="bg-white border-t border-gray-200">
+              <div className="w-full px-4 md:px-6 lg:px-8 md:max-w-5xl mx-auto py-4 md:py-5">
+                <div className="relative">
+                  <Input 
                   type="text" 
                   placeholder="Share your perspective..." 
                   className="w-full text-xs md:text-sm py-6 md:py-7 pl-4 md:pl-6 pr-12 md:pr-14 rounded-full focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 border-2 border-black border-r-4 border-b-4"
@@ -387,6 +447,7 @@ const handleSubmitPerspective = async () => {
               </div>
             </div>
           </div>
+          )}
         </div>
         )}
       </div>

@@ -69,11 +69,11 @@ export const OtpVerificationPage: React.FC = () => {
 
   if (!email) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F5EFFF] via-[#E5D9F2] to-[#CDC1FF] px-4">
-        <Card className="w-full max-w-md shadow-2xl border-[#CDC1FF] bg-white/90 backdrop-blur">
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <Card className="w-full max-w-md shadow-2xl bg-[#faf3dd] border-2 border-r-8 border-b-8 border-black backdrop-blur">
           <CardHeader>
-            <CardTitle className="text-center text-[#7371FC]">Invalid Access</CardTitle>
-            <CardDescription className="text-center text-[#A594F9]">
+            <CardTitle className="text-center text-[#4f772d]">Invalid Access</CardTitle>
+            <CardDescription className="text-center text-[#4f772d] text-xs p-2">
               Please sign up first to verify your email.
             </CardDescription>
           </CardHeader>
@@ -83,14 +83,14 @@ export const OtpVerificationPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F5EFFF] via-[#E5D9F2] to-[#CDC1FF] px-4">
-      <Card className="w-full max-w-md shadow-2xl border-[#CDC1FF] bg-white/90 backdrop-blur">
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <Card className="w-full max-w-md shadow-2xl bg-[#faf3dd] border-2 border-r-8 border-b-8 border-black backdrop-blur">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center text-[#7371FC]">
+          <CardTitle className="text-2xl font-bold text-center text-[#4f772d]">
             Verify your email
           </CardTitle>
-          <CardDescription className="text-center text-[#A594F9]">
-            We've sent a 6-digit code to <strong className="text-[#7371FC]">{email}</strong>
+          <CardDescription className="text-center text-[#4f772d] text-xs p-2">
+            We've sent a 4-digit code to <strong className="text-[#4f772d]">{email}</strong>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -102,28 +102,28 @@ export const OtpVerificationPage: React.FC = () => {
             )}
 
             {resendMessage && (
-              <div className="bg-[#E5D9F2] border border-[#CDC1FF] text-[#7371FC] px-4 py-3 rounded-md text-sm">
+              <div className="bg-green-50 border border-green-200 text-[#4f772d] px-4 py-3 rounded-md text-sm">
                 {resendMessage}
               </div>
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="otp">Enter OTP</Label>
+              <Label htmlFor="otp" className="text-xs">Enter OTP</Label>
               <Input
                 id="otp"
                 type="text"
-                placeholder="123456"
-                maxLength={6}
+                placeholder="1234"
+                maxLength={4}
                 {...register('otp')}
                 disabled={isLoading}
-                className="text-center text-2xl tracking-widest"
+                className="text-center text-2xl tracking-widest border-2 border-b-4 border-r-4 border-black focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:shadow-none"
               />
               {errors.otp && (
                 <p className="text-sm text-red-600">{errors.otp.message}</p>
               )}
             </div>
 
-            <Button type="submit" className="w-full bg-[#7371FC] hover:bg-[#A594F9] transition-colors" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-[#4f772d] hover:bg-[#50772dc8] transition-colors" disabled={isLoading}>
               {isLoading ? 'Verifying...' : 'Verify Email'}
             </Button>
 
@@ -132,7 +132,7 @@ export const OtpVerificationPage: React.FC = () => {
                 type="button"
                 onClick={handleResendOtp}
                 disabled={resendLoading}
-                className="text-sm text-[#7371FC] hover:text-[#A594F9] hover:underline disabled:opacity-50 font-medium"
+                className="text-sm text-[#4f772d] hover:text-[#50772dc8] hover:underline disabled:opacity-50 font-medium"
               >
                 {resendLoading ? 'Sending...' : "Didn't receive the code? Resend"}
               </button>

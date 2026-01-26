@@ -68,6 +68,19 @@ export const perspectiveApi = {
     const response = await api.get<AISummaryResponse>('/api/perspectia/summary/latest');
     return response.data;
   },
+
+  // Get user's perspective
+  getPerspectiveByUser: async (userId: string, topicId: string): Promise<PerspectiveResponse | null> => {
+    try {
+      const response = await api.get<PerspectiveResponse>(`${PERSPECTIVE_BASE}/get-by-user`, {
+        params: { userId, topicId }
+      });
+      return response.data;
+    } catch (error) {
+      // Return null if user hasn't submitted a perspective yet
+      return null;
+    }
+  },
 };
 
 export default perspectiveApi;
