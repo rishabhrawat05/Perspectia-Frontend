@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '../components/ui/card';
 import { Input } from '../components/ui/input';
-import { perspectiveApi, type Topic, type PerspectiveResponse, type PageResponse, type AISummaryResponse } from '../services/perspective.api';
+import { perspectiveApi, type Topic, type PerspectiveResponse, type AISummaryResponse } from '../services/perspective.api';
 
 export const DashboardPage: React.FC = () => {
   const { user } = useAuth();
@@ -31,7 +31,6 @@ export const DashboardPage: React.FC = () => {
   
   // User's perspective state
   const [userPerspective, setUserPerspective] = useState<PerspectiveResponse | null>(null);
-  const [userPerspectiveLoading, setUserPerspectiveLoading] = useState(false);
 
   // Check if current time is between 9PM and 9AM
   const isNightTime = () => {
@@ -62,14 +61,11 @@ useEffect(() => {
       if (!user?.id || !topic?.id) return;
       
       try {
-        setUserPerspectiveLoading(true);
         const userPerspectiveData = await perspectiveApi.getPerspectiveByUser(user.id, topic.id);
         setUserPerspective(userPerspectiveData);
       } catch (error) {
         console.error('Failed to fetch user perspective:', error);
         setUserPerspective(null);
-      } finally {
-        setUserPerspectiveLoading(false);
       }
     };
 
