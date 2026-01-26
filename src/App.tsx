@@ -6,10 +6,13 @@ import SignupPage from './pages/SignupPage'
 import OtpVerificationPage from './pages/OtpVerificationPage'
 import DashboardPage from './pages/DashboardPage'
 import './App.css'
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
+    
     <AuthProvider>
+       <Analytics />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
