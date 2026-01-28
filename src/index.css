@@ -133,3 +133,14 @@
     font-family: "Press Start 2P", monospace !important;
   }
 }
+
+/* Selection color used across the app */
+::selection {
+  background-color: #4f772d;
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: #4f772d;
+  color: #ffffff;
+}

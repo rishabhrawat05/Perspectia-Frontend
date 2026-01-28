@@ -206,6 +206,7 @@ const handleSubmitPerspective = async () => {
                 <p className="text-gray-400 text-xs text-center italic">No topic available</p>
               )}
             </CardContent>
+            
           </Card>
           
           {/* User's Perspective Card */}
@@ -282,6 +283,8 @@ const handleSubmitPerspective = async () => {
                   <p className="text-gray-400 text-xs md:text-lg text-center italic">No topic available</p>
                 )}
               </CardContent>
+              <CardContent className='text-[10px] wrap-break-word'>Today’s discussion closes at 9:00 PM IST</CardContent>
+              <CardContent className='text-[10px] wrap-break-word '>New Topic will arrive at 9:00 AM IST everyday</CardContent>
             </Card>
             
             {/* User's Perspective Card */}
@@ -441,6 +444,7 @@ const handleSubmitPerspective = async () => {
                   </svg>
                 </button>
               </div>
+              <p className='text-[10px] text-center mt-2 text-gray-500'>You can share perspective only once</p>
             </div>
           </div>
           )}

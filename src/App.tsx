@@ -7,6 +7,7 @@ import OtpVerificationPage from './pages/OtpVerificationPage'
 import DashboardPage from './pages/DashboardPage'
 import './App.css'
 import { Analytics } from '@vercel/analytics/react';
+import HomePage from './pages/HomePage'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
     <AuthProvider>
        <Analytics />
       <Routes>
+        <Route path='/' element={<HomePage/>}/>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/verify-otp" element={<OtpVerificationPage />} />
@@ -25,7 +27,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </AuthProvider>
