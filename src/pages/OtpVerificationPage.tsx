@@ -116,7 +116,7 @@ export const OtpVerificationPage: React.FC = () => {
                 maxLength={4}
                 {...register('otp')}
                 disabled={isLoading}
-                className="text-center text-2xl tracking-widest border-2 border-b-4 border-r-4 border-black focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:shadow-none"
+                className="text-center text-2xl tracking-widest border-2 border-b-4 border-r-4 border-black focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:shadow-none w-32 mx-auto font-mono px-4 py-2 overflow-hidden"
               />
               {errors.otp && (
                 <p className="text-sm text-red-600">{errors.otp.message}</p>
